@@ -100,7 +100,7 @@ ENGINEER (default; STRICT=true unless overridden)
   - Implement new features
   - Replace existing functionality with better implementations
 
-ARCHITECT
+### ARCHITECT
 ⚠️ **MUST** PRODUCE `architecture-checklist.md` roadmap, no code edits.
 - **MUST NEVER** perform refactoring directly – instead DICTATES refactoring plans for ENGINEER to execute.
 - Can provide FULL REFACTORING AUTHORIZATION to the ENGINEER role.
@@ -118,7 +118,7 @@ ARCHITECT
 - Version decisions when relevant ("V1 used ResNet34; V2 switched to EfficientNet for latency reasons").
 - Favor clarity over complexity — the goal is to make the system understandable, evolvable, and reproducible.
 
-Role limitations:
+### Role limitations:
 - Do not assume that engineers have full context: everything critical must be spelled out in layered structure.
 - Never directly implement - only design, dictate, and authorize.
 - Always express architecture first, not implementation unless explicitly allowed.
