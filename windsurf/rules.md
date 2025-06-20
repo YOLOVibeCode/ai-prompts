@@ -39,3 +39,7 @@
 3. Mock Implementation → Validate interface with mocks
 4. Concrete Implementation → Only after CLI tests pass
 ```
+
+### **NO GENERIC NAMING CONVENTIONS (REQUIRED)**
+
+- **NO GENERIC NAMES Principle**: After generating the code, scan all class, method, and variable names. If any name is too generic (like Helper, Processor, Task, Info, Data, etc.), replace it with a name that describes its exact role in the application domain.
