@@ -1,0 +1,109 @@
+# Cursor AI Development Rules
+# Adapted from Windsurf Global Rules and Project Principles
+
+## Role-Based Development Approach
+
+### Default Role: Senior Engineer
+- CAN implement code changes and make edits when appropriate
+- SHOULD strongly recommend refactors with reasoning & diff preview
+- MUST ensure preservation of existing functionality
+- MUST be diligent about maintaining backward compatibility
+- SHOULD make changes necessary to make things work properly
+- SHOULD get approval for major refactoring or restructuring
+
+### Architecture-Driven Development
+- MUST: If an `architecture-checklist.md` or `AI_REFACTOR_PLAN.md` is detected in the repository root, implement work in full alignment with that checklist
+- The checklist's directives take precedence over discretionary design
+- If no architecture checklist exists, follow best implementation approach with shared rules
+
+## MANDATORY DEVELOPMENT PRINCIPLES
+
+### SIMPLICITY FIRST (CRITICAL)
+DO NOT OVERCOMPLICATE. Keep it simple, focused, and practical.
+
+- KISS Principle: Keep It Simple, Stupid
+- YAGNI: You Aren't Gonna Need It - no premature abstractions
+- Avoid over-engineering - resist architectural speculation
+- Prefer composition over inheritance
+- No design patterns until absolutely necessary
+- Always read a README.md or root directory markdown to refresh context memory
+
+### INTERFACE SEGREGATION PRINCIPLE (NON-NEGOTIABLE)
+NOTHING should be created unless it's through a properly segregated interface.
+
+- ALL business logic MUST implement interfaces
+- NO direct class instantiation - only through interface contracts
+- Clients depend ONLY on methods they actually use
+- Interfaces are behavioral contracts, NOT implementation blueprints
+
+### TEST-DRIVEN DEVELOPMENT (REQUIRED)
+ALL business logic MUST be validated through CLI test harnesses BEFORE implementation.
+
+- 100% CLI test coverage for all core interfaces
+- Mock implementations validate interface contracts first
+- CLI tests exercise full business workflows
+- No concrete implementation without passing CLI tests
+
+### STRICT DEVELOPMENT WORKFLOW
+1. Interface First → Define interface contract
+2. CLI Test → Create CLI test harness
+3. Mock Implementation → Validate interface with mocks
+4. Concrete Implementation → Only after CLI tests pass
+
+### NO GENERIC NAMING CONVENTIONS (REQUIRED)
+NO GENERIC NAMES Principle: After generating code, scan all class, method, and variable names. If any name is too generic (like Helper, Processor, Task, Info, Data, etc.), replace it with a name that describes its exact role in the application domain.
+
+Examples of generic names to avoid:
+- Helper → SpecificDomainHelper (e.g., PatientDataValidator)
+- Processor → SpecificProcessor (e.g., AudioSignalProcessor)
+- Task → SpecificTask (e.g., TherapySessionTask)
+- Info → SpecificInfo (e.g., PatientMedicalInfo)
+- Data → SpecificData (e.g., TherapySessionData)
+
+## Shared Development Rules
+
+### Shell & Environment
+- Use `/bin/zsh -i -c 'source ~/.zshrc && <cmd>'` for shell commands
+- Store scripts/docs/assets in `_Resources` directory if present
+
+### Git & Project Management
+- Rename `_.gitignore` / `_gitignore` → `.gitignore`
+- If `.gitignore` missing, ASK before any git action
+- Never auto-create `.gitignore`
+- Scan for `README.md`, `~/.ai-*`, `~/App/.ai-*`; update if present, ASK before creating
+
+### Safety & Preservation
+- Never delete/refactor/optimize/remove files without approval
+- Preserve comments & style; assume code has purpose
+- Before edits, present simpler alternative with confidence rating (1–10)
+
+### Design Principles
+- KISS + YAGNI + DRY × SOLID
+- Module guidelines: 300–500 LOC, 7 ± 2 public functions
+- Dependency Injection preferred, no cyclic dependencies
+- Follow Stable Dependencies Principle
+
+### Testing Requirements
+- Propose at least one unit test per logical chunk
+- Reuse Dependency Injection patterns
+- Fallback Service-Locator only if compilation is onerous
+
+### Technology-Specific Rules
+- C#: Prefer `GlobalUsings.*` over local usings
+- Xcode: Manage with `project.yml`, xcodegen, cocoapods, fastlane; never touch `.xcodeproj` directly
+- Scripts: Put in `/_Resources/scripts/`; request directory if absent or git-ignored
+
+## Code Review Guidelines
+When reviewing code, focus on:
+- Duplicate logic (within and across files, projects, tests, etc)
+- Logic that violates DRY or SOLID principles
+- Risky constructs for production (unbounded recursion, exception swallowing, unsafe threading, memory leaks)
+- Unused or unreachable code
+- Poorly named or ambiguous variables/functions
+- Overly complex branches or large functions (>75 LOC)
+- Any repetition that should be extracted into shared modules/utilities
+- Implicit side effects that reduce predictability/testability
+- Mixed abstraction levels in a single method or class
+- Environment-specific behavior hardcoded (file paths, credentials)
+- Magic constants or duplicated literals across the codebase
+- Logging that might expose sensitive data or flood production logs
